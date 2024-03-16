@@ -1,0 +1,705 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <div class="container"> -->
+    <div id ="event_search" class="container">
+        <div class="This_is_a_form">
+        <form  class="container ps-4 pe-4" id ="form_inside" (ngSubmit)="submitted()" ngNativeValidate>
+            <div class="heading_name_ES">
+            <div class=" form-row header text-center mb-4 mt-11" id="header">
+                <label style ="font-family: Georgia, 'Times New Roman', Times, serif; color: #e2dcdc;">Events Search</label> 
+            </div>
+            </div>
+            <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-1" style="margin-top: -20px; border-bottom: 2px solid #979899;"></div>
+            
+            <div class="Keyword_section_search form-row">
+            <div class="ps-0 pe-7 mt-3" id="FR">
+                <div class="col-12 mb-2">
+                    <div>
+                    <p class="keyword" style="font-size: 15px;margin-bottom: 6px;">Keyword<span style="color:red;"> *</span></p>
+                    <div class="Input_the_keyword">
+                    <input type="text" class="form-control KP pm" id="KP"  name="KP" required [formControl]="KP" matInput [matAutocomplete]="fill">
+                    </div>
+                    <mat-autocomplete  #fill="matAutocomplete">
+                        <mat-option *ngIf="auto_search" class="is-loading"><mat-spinner diameter="25"></mat-spinner></mat-option>
+                        <div [hidden]="auto_search">
+                            <mat-option *ngFor="let i of moredata | async" [value]="i">
+                                {{i}}
+                            </mat-option>
+                        </div>       
+                    </mat-autocomplete>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+
+            <div class="row" >
+                <div class="col-lg-6 ps-2" style="margin-bottom: 19px;">
+                    <p class="distance_name" style="font-size: 15px; margin-bottom: 6px;">Distance</p>
+                    <input type="number" class="form-control pm another_distance" value="10" id="DP" [formControl]="distance_selected">
+                </div>
+                <div class="col  me-4 pe-0" id="cc" style="padding-left: 8px; margin-bottom: 12px;">
+                    <p class="category_name" style="font-size: 15px; margin-bottom: 6px;">Category<span style="color:red;"> *</span></p>
+                    <div class="selection ">
+                        <select class=" form-select DC outline pm ps-3 boxshadow_hide "  id=" DC" [formControl]="CP" name="DC" >
+                            <option value="" selected [ngValue]="null" style="background-color:rgb(63, 61, 61);color: white;">Default</option>
+                            <option value="KZFzniwnSyZfZ7v7nJ" style="background-color:rgb(63, 61, 61);color: white;" >Music</option>
+                            <option value="KZFzniwnSyZfZ7v7nE" style="background-color:rgb(63, 61, 61);color: white;">Sports</option>
+                            <option value="KZFzniwnSyZfZ7v7na" style="background-color:rgb(63, 61, 61);color: white;" >Arts & Theatre</option>
+                            <option value="KZFzniwnSyZfZ7v7nn" style="background-color:rgb(63, 61, 61);color: white;" >Film</option>
+                            <option value="KZFzniwnSyZfZ7v7n1" style="background-color:rgb(63, 61, 61);color: white;">Miscellaneous</option>
+                        </select>
+                    
+                </div>
+                </div>
+            </div>
+        <!-- </div> -->
+            <div id="FR" class="form-row">
+                <div class="col-12 mb-1">
+                    <p class="location_name" style="font-size: 15px; margin-bottom: 6px;">Location<span style="color:red;"> *</span></p>
+                    <div class="locationnnn">
+                    <input  type="text" class="form-control pm" id="LP" required pattern=".*\S+.*" [formControl]="location_selected">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="another_row">
+            <div class="form-check formsss form-row" id="check" style="margin-left: 0px;">
+                <input type="checkbox" style=" box-shadow: none !important;"class="form-check-input" id="EC1" [formControl] ="automatic_location" (click)="checkbox_clicked()"/>
+                <label  class="auto_detect_name form-check-label ms-1 ps-1 me-auto" for="EC1" style="font-size: 15px;">Auto-detect your location</label>
+                <div></div>
+            </div>
+        </div>
+        <div class="last_part">
+            <div class="pb-4 mb-4" id="button">
+                <button class="btn btn-danger" id="S_button" type="submit">SUBMIT</button>
+                <button class="btn btn-primary" id="C_button" type="reset" (click)="cleartheform()">CLEAR</button>
+            </div>
+        </div>
+        <div></div>
+        </form>
+    </div>
+    </div>
+
+        <div style="padding-bottom: 5px;" *ngIf="table_no_records">
+            <div class="text-center no_result" >
+                <span style="color: red; font-weight: 500; font-size: 18px;">No results available</span>
+            </div>
+        </div>
+ 
+        <div class="container" *ngIf="table_display" style="padding-left:9px;padding-right: 9px;margin-top: 50px;padding-bottom: 50px;">
+
+        <div class="table-responsive">
+      
+                <table class="table_responsive table table-striped table-borderless text-center table-dark" id="table_responsive">
+                    <thead style="color:white">
+                        <tr style="font-size: 15px;">
+                            <th scope="col"  style="padding-left: 12px;">Date/Time</th>
+                            <th scope="col"  style="padding-left: 8px;padding-right: 8px;">Icon</th>
+                            <th scope="col" style="word-wrap: normal;" style="padding-left: 8px;padding-right: 8px;">Event</th>
+                            <th scope="col"  style="padding-left: 8px;padding-right: 8px;">Genre</th>
+                            <th scope="col"  style="padding-left: 8px;padding-right: 8px;">Venue</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let info of event_data" style="color:white;font-size: 15px;cursor:pointer;" (click)="searchforevents(info.id)">
+                            <th scope="row" class="pt-2" style="width: auto; max-width: 15px; height: 90px;padding-left: 8px;padding-bottom: 0px;padding-right: 4px;"><p style="padding-right: 5px;margin-bottom: 4px;">{{info.localdate}}</p><p style="padding-right: 6px;margin-bottom: 0px;">{{info.localtime}}</p></th>
+                            <td  class="" style="padding-left: 10px;padding-right: 10px;text-align: center;height: 90px;">
+                                <img *ngIf="info.image" src ="{{info.image}}" style="width: 75px; height: 75px;vertical-align: middle;" alt="Image"/> 
+                            </td>
+                            <td class="p-1 pt-2" style="width: auto; max-width: 250px; height: 90px;text-align: center;">{{info.name}}</td>
+                            <td class="pt-2" style="width: auto; max-width: 100px; height: 90px;padding-left: 10px;padding-right: 8px;text-align: center;">{{info.segment}}</td>
+                            <td class="pt-2" style="width: auto; max-width: 100px; height: 90px;padding-left: 10px;padding-right: 10px;text-align: center;">{{info.venue}}</td>
+                            
+                        </tr>
+                        
+                        
+                        
+                        
+
+                        
+                    </tbody>
+                </table>
+            </div>
+        <!-- </div> -->
+    </div>
+    <!-- </div> -->
+
+
+<!-- Event Details Card -->
+
+
+<div class ="ms-auto me-auto event_card_container" id ="event_card_container" *ngIf="Event_display" style="margin-top: 110px;padding-bottom: 39px;margin-bottom: 11px;">
+
+
+    <form class=" ms-auto me-auto event_card" id="event_card">
+        <div id="rheader">
+            <p style="text-align: left; margin-left: 15px; margin-top:14px;color: white;">
+                <!-- <svg id="arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg> -->
+                <i class="fa fa-angle-left fa-lg" style="font-size: 22px;"></i>
+                <span  id="back" style="color:white; padding-top: 10px; padding-left: 4px; font-size: 15; " class="text-decoration-underline" (click)="back()">Back</span>
+            </p>
+           <!-- <p class ="text-center event_card_name" id="event_card_name" style="margin-bottom: 0px;font-size: 22px;">Los Angeles Lakers vs. Golden State Warriors &nbsp; -->
+            <p class ="text-center event_card_name" id="event_card_name" style="margin-bottom: 0px; font-size: 22px; padding-left:2%; padding-right: 2%;">{{detailed_event.name}} &nbsp;
+            <span>
+
+                <button
+                (click)="onSubmitFavorite()"
+                [hidden]="!isfavorite"
+                [disableRipple]="true"
+                    mat-mini-fab
+                    matTooltip="Primary"
+                    color=""
+                    aria-label="Example mini fab with a heart icon"
+                    style="color: red; background-color: rgb(255, 255, 255)"
+                    >
+                    <mat-icon>favorite</mat-icon>
+                </button>
+                <button
+                (click)="onSubmitFavorite()"
+                [disableRipple]="true"
+                [hidden]="isfavorite"
+                mat-mini-fab
+                matTooltip="Primary"
+                color=""
+                aria-label="Example mini fab with a heart icon"
+                style="background-color: rgb(255, 255, 255);">
+                <mat-icon style="color:grey">favorite_outlined</mat-icon>
+                </button>
+
+                <!-- <button
+                (click)="onSubmitFavorite()"
+                [hidden]="!isfavorite"
+                
+                    mat-mini-fab
+                    matTooltip="Primary"
+                    color=""
+                    aria-label="Example mini fab with a heart icon"
+                    style="color: red; background-color: rgb(255, 255, 255)"
+                    >
+                    <mat-icon>favorite</mat-icon>
+                </button>
+                <button
+                (click)="onSubmitFavorite()"
+                
+                [hidden]="isfavorite"
+                mat-mini-fab
+                matTooltip="Primary"
+                color=""
+                aria-label="Example mini fab with a heart icon"
+                style="background-color: rgb(255, 255, 255);">
+                <mat-icon style="color:grey">favorite_outlined</mat-icon>
+                </button> -->
+
+            </span>
+            <!-- <span id="boot-icon" class="bi bi-heart" style="font-size: 15px; color: rgb(128, 128, 128); background-color: rgb(255, 255, 255); border-radius: 50%; padding: 9px; border: hidden; -webkit-text-stroke-width: 0.4px; opacity: 1;"></span><span id="boot-icon" class="bi bi-heart-fill" style="font-size: 15px; color: rgb(255, 0, 0); background-color: rgb(255, 255, 255); border-radius: 50%; padding: 9px; border: hidden; -webkit-text-stroke-width: 0.4px; opacity: 1;"></span> -->
+        </p>
+        </div>
+        <div>
+            <mat-tab-group mat-align-tabs="center" #businessTabs backgroundColor="accent" class="w-100 mt-6 p-0" >
+                <mat-tab label="Events">
+                    <div class="container mb-1 text-center">
+                        <div class="row event_info">
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-4">
+                                <div *ngIf="has_date">
+                                    <p class="event_labels">Date</p>
+                                    <!-- <p style="margin-top: -5px;font-size: 15px;"> 2023-02-23</p> -->
+                                    <p style="margin-top: -5px;font-size: 15px;"> {{detailed_event.date}}</p>
+                                </div>
+                                <div style="margin-top: 23px;" *ngIf="has_artist">
+                                    <p class="event_labels">Artist/Team</p>
+                                    <!-- <p style="margin-top: -5px;font-size: 15px;">Los Angeles Lakers | Golden State Warriors</p> -->
+                                    <p style="margin-top: -5px;font-size: 15px;">{{detailed_event.artists}}</p>
+                                </div>
+                                <div style="margin-top: 23px;" *ngIf="has_venue">
+                                    <p class="event_labels">Venue</p>
+                                    <!-- <p style="margin-top: -5px;font-size: 15px;">Crypto.com Arena</p> -->
+                                    <p style="margin-top: -5px;font-size: 15px;">{{detailed_event.venue}}</p>
+                                </div>
+                                <div style="margin-top: 23px;" *ngIf="has_genre">
+                                    <p class="event_labels">Genres</p>
+                                    <!-- <p style="margin-top: -5px;font-size: 15px;">Basketball | NBA | Sports | Group | Team</p> -->
+                                    <p style="margin-top: -5px;font-size: 15px;">{{detailed_event.genres}}</p>
+                                </div>
+                                <div style="margin-top: 23px;" *ngIf="has_price">
+                                    <p class="event_labels">Price Ranges</p>
+                                    <!-- <p style="margin-top: -5px;font-size: 15px;">170-1560</p> -->
+                                    <p style="margin-top: -5px;font-size: 15px;">{{detailed_event.priceRange}}</p>
+                                </div>
+                                <div style="margin-top: 23px;" *ngIf="has_ticket_status">
+                                    <p class="event_labels" style="margin-bottom: 4px;">Ticket Status</p>
+                                    <!-- <p class="label tag" id="onsale" *ngIf="true">On Sale</p> -->
+                                    <p class="label tag" id="onsale" *ngIf="onsale">On Sale</p>
+                                    <p class="label1 tag1" id="rescheduled" *ngIf="rescheduled">Rescheduled</p>
+                                    <p class="label2 tag2" id="offsale" *ngIf="offsale">Off Sale</p>
+                                    <p class="label3 tag3"  id="canceled" *ngIf="cancelled">Canceled</p>
+                                    <p class="label4 tag4" id="postponed" *ngIf="postponed">Postponed</p>
+                                    <!-- <p style="margin-top: -5px;">Available</p> -->
+                                    <!-- <p style="margin-top: -5px;">{{detailed_event.ticket_status}}</p> -->
+                                </div>
+                                <div style="margin-top: 23px;" *ngIf="has_buy_ticket_at">
+                                    <p class="event_labels">Buy Ticket At:</p>
+                                    <!-- <p  style="margin-top: -5px;font-size: 15px;"><span><a href="https://www.stubhub.com/los-angeles-lakers-tickets-los-angeles-lakers-vs-golden-state-warriors-2-23-2023-1230000/" target="_blank">Ticketmaster</a></span></p> -->
+                                    <p  style="margin-top: -5px;font-size: 15px;"><span><a href="{{detailed_event.buy_ticket_at}}" target="_blank">Ticketmaster</a></span></p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div>
+                                    <!-- <img src ="../../../assets/dummy.png" style="width: 100%; height: 100%" alt="Image"/> -->
+                                    <img src ="{{detailed_event.seatmap}}" style="width: 100%; height: 100%" alt="Image"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="share">
+                            Share on:  <a href="" target="_blank"><i class="fa fa-twitter fa-lg" style="color:rgb(0, 217, 255)"></i></a><a href="" target="_blank" class="fa fa-facebook-square fa-lg"></a>
+                          </div> -->
+
+                        <div class="fb_twit">
+                            <p class ="text-center social_media" style="font-size: 15px;">Share on:&nbsp;
+                                <!-- <span><a href="" target="_blank"><i class="fa fa-twitter fa-lg twit" style="font-size:25px"></i></a></span>&nbsp;
+                                <span><a href="" target="_blank"><i class="fa fa-facebook-square fa-lg" style="font-size:25px"></i></a></span> -->
+                                <span><a href="https://twitter.com/intent/tweet?text={{linktotweet}}" target="_blank"><i class="fa fa-twitter fa-lg twit" style="font-size:25px"></i></a></span>&nbsp;
+                                <span><a href="https://www.facebook.com/sharer/sharer.php?u={{linktofb}}" target="_blank" ><i class="fa fa-facebook-square fa-lg" style="font-size:25px"></i></a></span>
+                            </p>
+                        </div>
+
+                    </div>
+                </mat-tab>
+                <mat-tab label="Artists/Teams">
+                    <div class="container">
+                        <div class="text-center no_artist" *ngIf="no_result_artist">
+                            <span style="color: red; font-weight: 500; font-size: 18px;">No music related artist details to show</span>
+                        </div>
+                    </div>
+
+                    <div id="CEC" class="carousel slide pb-3" data-bs-ride="carousel" data-bs-interval="false" *ngIf="!no_result_artist">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" *ngFor="let item of detailed_spotify; let i=index" [ngClass]="(i === 0) ? 'active':''">
+                            <!-- <div class="carousel-item active" *ngIf="true"> -->
+                                <!-- <div class="carousel-item"> -->
+                                <div class="container top_contain " style="margin-top: 14px;">
+                                    <div class="row text-center">
+                                        <div class="col-lg-auto">
+
+                                        </div>
+                                        <div class="col-lg-1" style="padding-right: 12px;padding-left: 12px;margin-right: 0px;">
+                                        </div>
+                                        <div class="col-md-3 align-self-center">
+                                                <!-- <img src="../../../assets/dummy.png" style="width: 160px; height: 160px" class="rounded-circle" alt="Image"/> -->
+                                                <img src="{{item[0].image[0].url}}" style="width: 160px; height: 160px" class="rounded-circle" alt="Image"/>
+                                                <!-- <div class="artist_name" style="color:#98edd8;font-size: 19px; margin-top: 9px;margin-bottom: 17px;">Pitbull1</div> -->
+                                                <p class="artist_name" style="color:#81ffe0;font-size: 19px; margin-top: 9px;margin-bottom: 17px;">{{item[0].name}}</p>
+                                        </div>
+                                        <div class="col-md-2 align-self-center" style="margin-bottom: 8px;padding-top: 7px;">
+                                                <div><p class="popu " style="color:#81ffe0;font-size: 19px;margin-bottom: 20px;">Popularity</p></div>
+                                                <div style="margin-bottom: 8px;">
+                                                    <!-- <mat-progress-spinner  style="margin-left: auto;margin-right: auto;" class="spinner" value="90" mode="determinate" diameter="40">
+                                                    </mat-progress-spinner> -->
+                                                    <mat-progress-spinner  style="margin-left: auto;margin-right: auto;" class="spinner" value="{{item[0].popularity}}" mode="determinate" diameter="40">
+                                                    </mat-progress-spinner>
+                                                    <div class="text-center" style="margin-top: -31px;">
+                                                        <!-- <span style="color: white; font-weight: 500; font-size: 12px;">90</span> -->
+                                                        <span style="color: white; font-weight: 500; font-size: 12px;">{{item[0].popularity}}</span>
+                                                    </div>
+                                                </div>
+                                                
+                                        </div>
+                                        <div class="col-md-2 align-self-center followers"style="margin-bottom: 14px;padding-top: 7px;">
+                                            <div class="">
+                                                <p class="follow" style="color:#81ffe0;font-size: 19px;padding-top: -4px;margin-bottom: 20px;">Followers</p>
+                                                <!-- <p style="font-size: 15px;">9,835,196</p> -->
+                                                <p style="font-size: 15px;">{{item[0].followers}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 align-self-center">
+                                            <div class="">
+                                                <p class="spotify" style="color:#81ffe0;font-size: 19px; margin-bottom: 25px;padding-top: 7px;">Spotify Link</p>
+                                                <!-- <p style="margin-bottom: 0px;"><a href="https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg" target="_blank"><i class="fa-brands fa-spotify fa-3x" style="color:green"></i></a></p> -->
+                                                <p style="margin-bottom: 0px;"><a href="{{item[0].spotifylink}}" target="_blank"><i class="fa-brands fa-spotify fa-3x" style="color:green"></i></a></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+
+                                        </div>
+                                        <div class="col-lg-auto">
+
+                                        </div>
+                                        <!-- <div class="col-md-auto"></div> -->
+                                    </div>
+                                    <div class="row d-flex" style="margin-top: 10px;">
+                                        <!-- <div class="col-lg-auto">
+
+                                        </div>
+                                        <div class="col-lg-1" style="padding-right: 12px;padding-left: 12px;margin-right: 12px;">
+                                        </div> -->
+                                        <div class="col-lg-1 col-md-1 col-2"></div>
+                                        <div class="col-md-10 col-lg-10 col-8 col-sm-8 float-left" >
+                                        
+                                        <p class="albums" style="color:#81ffe0;font-size: 15px;padding-left: 28px;">Albums featuring {{item[0].name}} </p>
+                                        </div>
+                                        <!-- <div class="col-md-7 float-left" >
+                                        
+                                            <p class="albums" style="color:#81ffe0;font-size: 15px; padding-left: 23%;padding-right:24%">Albums featuring {{item[0].name}} </p>
+                                            </div> -->
+                                    </div>
+                                    <!-- <div class="row" style="margin-top: 10px;">
+                                        <div class="col-lg-auto">
+
+                                        </div>
+                                        <div class="col-lg-1" style="padding-right: 12px;padding-left: 12px;margin-right: 12px;">
+                                        </div>
+                                        <div class="col-md-7 float-left" >
+                                        
+                                        <p style="color:#98edd8;font-size: 15px;">Albums featuring {{item[0].name}} </p>
+                                        </div>
+                                    </div> -->
+                                    <div class="row mx-auto text-center" style="margin-top: 10px;">
+                                        
+                                        <div class="col-lg-auto">
+
+                                        </div>
+                                        <div class="col-lg-1" style="padding-right: 12px;padding-left: 12px;margin-right: 0px;">
+                                        </div>
+                                        <div class="col-lg-3 " style="margin-top: 5px; margin-bottom: 10px;">
+                                                <!-- <img src="../../../assets/dummy.png" style="width: 180px; height: 180px" alt="Image"/> -->
+                                                <img src="{{item[0].img1}}" style="width: 180px; height: 180px" alt="Image"/>
+                                        </div>
+                                        <div class="col-lg-3 " style="margin-top: 5px; margin-bottom: 10px;">
+                                                <!-- <img src="../../../assets/dummy.png" style="width: 180px; height: 180px" alt="Image"/> -->
+                                                <img src="{{item[0].img2}}" style="width: 180px; height: 180px" alt="Image"/>
+                                        </div>
+                                        <div class="col-lg-3" style="margin-top: 5px; margin-bottom: 10px;">
+                                                <!-- <img src="../../../assets/dummy.png" style="width: 180px; height: 180px" alt="Image"/> -->
+                                                <img src="{{item[0].img3}}" style="width: 180px; height: 180px" alt="Image"/>
+                                        </div>
+                                        <div class="col-lg-1">
+
+                                        </div>
+                                        <div class="col-lg-auto">
+
+                                        </div>
+                                    </div>
+            
+                                </div>
+                                
+                            <!-- </div> -->
+
+                            </div> 
+
+
+                        </div>
+                        <button class="carousel-control-prev carousal" type="button" data-bs-target="#CEC" data-bs-slide="prev" *ngIf="disable_aero">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#CEC" data-bs-slide="next" *ngIf="disable_aero">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <!-- 
+                    <div class="main">
+                    <div class="container top_contain ">
+                        <div class="row text-center">
+                            <div class="col-md-1 ms-3">
+
+                            </div>
+                            <div class="col-md-3 col1">
+                                <div class="">
+                                    <img src="../../../assets/dummy.png" style="width: 160px; height: 160px" class="rounded-circle" alt="Image"/>
+                                    <p class="artist_name" style="color:#98edd8;font-size: 19px; margin-top: 9px;">Pitbull</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col2">
+                                    <div><p class="popu " style="color:#98edd8;font-size: 19px;">Popularity</p></div>
+                                    <div style="margin-bottom: 8px; margin-top: 4px;">
+                                        <mat-progress-spinner  style="margin-left: auto;margin-right: auto;" class="spinner" value="90" mode="determinate" diameter="40">
+                                        </mat-progress-spinner>
+                                        <div class="text-center" style="margin-top: -31px;">
+                                            <span style="color: white; font-weight: 500; font-size: 12px;">84</span>
+                                        </div>
+                                    </div>
+                                    
+                            </div>
+                            <div class="col-md-2 col3">
+                                <div class="">
+                                    <p class="follow" style="color:#98edd8;font-size: 19px;">Followers</p>
+                                    <p>9,835,196</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col4">
+                                <div class="">
+                                    <p class="spotify" style="color:#98edd8;font-size: 19px;">Spotify Link</p>
+                                    <p><a href="https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg" target="_blank"><img src="../../../assets/Orion_spotify.png" style="width:40px;height:40px;"/></a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center" style="margin-top: 10px;">
+                            <div class="col-md-1 ms-1">
+                            </div>
+                            <div class="col-md-3">
+                            <p style="color:#98edd8;font-size: 15px;">Albums featuring Pitbull </p>
+                            </div>
+                        </div>
+                        <div class="row text-center" style="margin-top: 10px;">
+                            <div class="col-md-1 ms-1">
+                            </div>
+                            <div class="col-md-3">
+                                <div>
+                                    <img src="../../../assets/dummy.png" style="width: 160px; height: 160px" alt="Image"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div>
+                                    <img src="../../../assets/dummy.png" style="width: 160px; height: 160px" alt="Image"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div>
+                                    <img src="../../../assets/dummy.png" style="width: 160px; height: 160px" alt="Image"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+             -->
+                            
+                </mat-tab>
+                <mat-tab label="Venue">
+                    <div class="ven container text-center ">
+                    <div class="row">
+                        <div class="col-md mt-5">
+                            <div *ngIf="venuenameflag" style="margin-bottom: 25px;">
+                                <p class="event_labels" style="margin-bottom: 6px">Name</p>
+                                <!-- <p style="font-size: 16px;">Comerica Park</p> -->
+                                <p style="font-size: 16px;">{{venue_details.name}}</p>
+                            </div>
+                            <div *ngIf="addressflag" style="margin-bottom: 25px;">
+                                <!-- <div *ngIf="true" style="margin-bottom: 25px;"> -->
+                                <p class="event_labels" style="margin-bottom: 6px">Address</p>
+                                <!-- <p style="font-size: 16px;">2100 Woodward Ave, Detroit, Michigan</p> -->
+                                <p style="font-size: 16px;">{{venue_details.address}}</p>
+                            </div>
+                            <div *ngIf="phonenumberflag">
+                                <!-- <div *ngIf="true"> -->
+                                <p class="event_labels" style="margin-bottom: 6px">Phone Number</p>
+                                <!-- <p  style="margin-bottom: 0px;font-size: 16px;">(313) 962-4000</p> -->
+                                <p  style="margin-bottom: 0px;font-size: 16px;">{{venue_details.phonenumber}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md mt-5">
+                            <div *ngIf="openhourflag" style="margin-bottom: 20px;">
+                                <!-- <div *ngIf="true" style="margin-bottom: 20px;"> -->
+                                <p class="event_labels" style="margin-bottom: 6px">Open Hours</p>
+                                <!-- <p [ngClass]="{'hide-content': !showMore}" style=" text-overflow: unset !important;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</p>
+                                <button class="btn btn-primary" (click)="toggleShowMore()">
+                                    {{ showMore ? 'Show less' : 'Show more' }}
+                                </button> -->
+                                <div *ngIf="showMore1" class=" half collapse show" data-bs-toggle="collapse" id="myText">
+                                    <!-- <p style="margin-bottom: 0px; font-size: 16px;">
+                                        Lorem ipsum dolor sit amet, consectetefafaefae ur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
+                                    </p> -->
+                                    <p style="margin-bottom: 0px; font-size: 16px;">
+                                        {{venue_details.openhours}}
+                                    </p>
+                                    <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="true" aria-controls="myText">
+                                        show less
+                                    </button> -->
+                                </div>
+                                <div *ngIf="!showMore1" class=" full collapse show" data-bs-toggle="collapse" id="myText">
+                                    <!-- <p style="margin-bottom: 0px; font-size: 16px;">
+                                        Lorem ipsum dolor sit amet, consectetefafaefae ur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
+                                    </p> -->
+                                    <p style="margin-bottom: 0px;font-size: 16px;">
+                                        {{venue_details.openhours}}
+                                    </p>
+                                    <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="true" aria-controls="myText">
+                                        show less
+                                    </button> -->
+                                </div>
+                                <div style="margin-top: 7px;">
+                                    <p *ngIf="showMore1" (click)="toggleShowMore()" style="color: skyblue;text-decoration: underline;cursor: pointer;">
+                                        Show More<span style="color:white; margin-left: 4px;">
+                                            <i class="fa fa-angle-down fa-sm"></i>
+                                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="white" class="bi bi-chevron-down" viewBox="0 4 16 16">
+                                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                          </svg> -->
+                                        </span>
+                                    </p>
+                                </div>
+                                <div style="margin-top: 7px;">
+                                    <p *ngIf="!showMore1" (click)="toggleShowMore()" style="color: skyblue;text-decoration: underline;cursor: pointer;">
+                                        Show Less<span style="color:white; margin-left: 4px;">
+                                            <i class="fa fa-angle-up fa-sm"></i>
+                                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="white" class="bi bi-chevron-up" viewBox="0 4 16 16">
+                                                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                                              </svg> -->
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <!-- <div>
+                                    <button *ngIf="showMore" class="btn btn-primary" type="button" (click)="toggleShowMore()">
+                                        show more
+                                    </button>
+                                </div>
+                                <div>
+                                    <button *ngIf="!showMore" class="btn btn-primary" type="button" (click)="toggleShowMore()">
+                                        show less
+                                    </button>
+                                </div> -->
+
+                                <!-- <div class="collapse show " data-bs-toggle="collapse" id="myText">
+                                    <p>
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
+                                    </p>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="false" aria-controls="myText">
+                                        show less
+                                    </button>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="true" aria-controls="myText">
+                                      show more
+                                    </button>
+                                </div> -->
+                            </div>
+                            <div *ngIf="generalruleflag" style="margin-bottom: 20px;">
+                                <!-- <div *ngIf="true" style="margin-bottom: 20px;"> -->
+                                <p class="event_labels" style="margin-bottom: 6px">General Rule</p>
+                                <div *ngIf="showMore2" class=" half collapse show" data-bs-toggle="collapse" id="myText">
+                                    <!-- <p style="margin-bottom: 0px;font-size: 16px;">
+                                        Lorem ipsum dolor sit amet, consectetefafaefae ur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
+                                    </p> -->
+                                    <p style="margin-bottom: 0px;font-size: 16px;">
+                                        {{venue_details.generalrule}}
+                                    </p>
+                                    <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="true" aria-controls="myText">
+                                        show less
+                                    </button> -->
+                                </div>
+                                <div *ngIf="!showMore2" class=" full collapse show" data-bs-toggle="collapse" id="myText">
+                                    <!-- <p style="margin-bottom: 0px;font-size: 16px;">
+                                        Lorem ipsum dolor sit amet, consectetefafaefae ur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
+                                    </p> -->
+                                    <p style="margin-bottom: 0px;font-size: 16px;">
+                                        {{venue_details.generalrule}}
+                                    </p>
+                                    <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="true" aria-controls="myText">
+                                        show less
+                                    </button> -->
+                                </div>
+                                <div style="margin-top: 7px;">
+                                    <p *ngIf="showMore2" (click)="toggleShowMore2()" style="color: skyblue;text-decoration: underline;cursor: pointer;">
+                                        Show More<span style="color:white; margin-left: 4px;">
+                                            <i class="fa fa-angle-down fa-sm"></i>
+                                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="white" class="bi bi-chevron-down" viewBox="0 4 16 16">
+                                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                          </svg> -->
+                                        </span>
+                                    </p>
+                                </div>
+                                <div style="margin-top: 7px;">
+                                    <p *ngIf="!showMore2" (click)="toggleShowMore2()" style="color: skyblue;text-decoration: underline;cursor: pointer;">
+                                        Show Less<span style="color:white; margin-left: 4px;">
+                                            <i class="fa fa-angle-up fa-sm"></i>
+                                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="white" class="bi bi-chevron-up" viewBox="0 4 16 16">
+                                                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                                              </svg> -->
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div *ngIf="childruleflag">
+                                <!-- <div *ngIf="true"> -->
+                                <p class="event_labels" style="margin-bottom: 6px">Child Rule</p>
+                                <div *ngIf="showMore3" class=" half collapse show" data-bs-toggle="collapse" id="myText">
+                                    <!-- <p style="margin-bottom: 0px;font-size: 16px;">
+                                        Lorem ipsum dolor sit amet, consectetefafaefae ur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
+                                    </p> -->
+                                    <p style="margin-bottom: 0px;font-size: 16px;">
+                                        {{venue_details.childrule}}
+                                    </p>
+                                    <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="true" aria-controls="myText">
+                                        show less
+                                    </button> -->
+                                </div>
+                                <div *ngIf="!showMore3" class=" full collapse show" data-bs-toggle="collapse" id="myText">
+                                    <!-- <p style="margin-bottom: 0px;font-size: 16px;">
+                                        Lorem ipsum dolor sit amet, consectetefafaefae ur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
+                                    </p> -->
+                                    <p style="margin-bottom: 0px;font-size: 16px;">
+                                        {{venue_details.childrule}}
+                                    </p>
+                                    <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#myText" aria-expanded="true" aria-controls="myText">
+                                        show less
+                                    </button> -->
+                                </div>
+                                <div style="margin-top: 7px;">
+                                    <p *ngIf="showMore3" (click)="toggleShowMore3()" style="color: skyblue;text-decoration: underline;cursor: pointer;">
+                                        Show More<span style="color:white; margin-left: 4px;">
+                                            <i class="fa fa-angle-down fa-sm"></i>
+                                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="white" class="bi bi-chevron-down" viewBox="0 4 16 16">
+                                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                          </svg> -->
+                                        </span>
+                                    </p>
+                                </div>
+                                <div style="margin-top: 7px;">
+                                    <p *ngIf="!showMore3" (click)="toggleShowMore3()" style="color: skyblue;text-decoration: underline;cursor: pointer;">
+                                        Show Less<span style="color:white; margin-left: 4px;">
+                                            <i class="fa fa-angle-up fa-sm"></i>
+                                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="white" class="bi bi-chevron-up" viewBox="0 4 16 16">
+                                                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                                              </svg> -->
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="googlemapflag" class="googlemaps" style="margin-top: 11px;">
+                        <p><button type="button" class="btn btn-danger boxshadow_hide" data-bs-toggle="modal" data-bs-target="#drops">Show venue on Google map</button></p>
+                    </div>
+
+                </div>
+               
+                </mat-tab>
+            </mat-tab-group>  
+        </div>
+
+
+
+    </form>
+
+</div>
+<div class="modal fade" id="drops" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: transparent !important;" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="padding-top: 12px;padding-bottom: 12px;">
+          <h5 class="modal-title reservation_form_label" id="exampleModalLabel" style="margin-top: 10px; margin-bottom: 10px;font-size: 22px;">Event Venue</h5>
+        </div>
+        <div class="modal-body">
+            <div class="gmap_contain">
+                <google-map  width="100%"  height="390px" [center]="markerOpt" [zoom] = "14">
+                    <map-marker [position]="markerOpt"></map-marker>
+                </google-map>
+              </div>
+        </div>
+        <div class="footeeeerrr" style="margin-left: 33px;">
+          <button type="button" class="btn btn-dark close_button" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

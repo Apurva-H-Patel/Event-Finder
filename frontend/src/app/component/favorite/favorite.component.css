@@ -1,0 +1,38 @@
+
+.no_result{
+    background-color: white;
+
+    margin-top: 65px;
+    margin-bottom: 15px;
+    border-radius: 13px;
+    line-height: 21px;
+}
+.no_result1{
+    background-color: white;
+    max-width: 700px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 60px;
+    margin-bottom: 15px;
+    border-radius: 13px;
+    line-height: 21px;
+    width: 60vw;
+}
+
+tbody tr:last-child td:last-child{
+    border-radius: 0 0 14px 0;
+}
+
+
+thead tr:last-child th:last-child{
+    border-radius: 0 14px 0 0;
+}
+
+tbody tr:last-child th:first-child{
+    border-radius: 0 0 0 14px;
+}
+
+
+thead tr:last-child th:first-child{
+    border-radius: 14px 0 0 0;
+}

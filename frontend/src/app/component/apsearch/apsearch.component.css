@@ -1,0 +1,465 @@
+#event_search{
+    margin-bottom: 18px;
+    width: 100%;
+    
+    display: flex;
+    margin-left: auto;
+    margin-top: 47px;
+    padding-right: 9px;
+    
+    margin-right: auto;
+    padding-left: 9px;
+    flex-direction: column;
+    
+    padding-bottom: 9px;
+    max-width: 680px;
+    border-radius: 4px;
+    height: 100%;
+}
+::placeholder{
+    color: black;
+}
+.keyword{
+    text-align: left; font-weight: 400;color: #98c1da;
+}
+.keyword_input{
+    margin-top: -10px;
+}
+.distance_name{
+    text-align: left; font-weight: 400;color: #98c1da;
+}
+.category_name{
+    text-align: left; font-weight: 400;color: #98c1da;
+}
+.location_name{
+    text-align: left; font-weight: 400;color: #98c1da;
+}
+.row{
+    padding-left: 4px;
+}
+.auto_detect_name{
+    text-align: left; font-weight: 400;color: #98c1da;
+}
+#form_inside{
+    background-color:rgba(149, 147, 147, 0.322);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(3.9px);
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    
+    
+    margin-left: 0px;
+    
+    border-radius: 14px;
+    max-width: 800px;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.header{
+    font-size: 37px;
+    margin-top: 70px;
+    
+    justify-content: center;
+    
+    font-weight: 500;
+    margin-bottom: 30px;
+    width: 100%;
+}
+#cc{
+    margin-right: 100px !important;
+}
+.pm{
+    border-radius: 9px;
+    font-size: 17px;
+    height: 41px;
+}
+
+#FR{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 13px;
+    font-weight: 497;
+}
+.formsss{
+    
+    display: flex;
+    font-weight: 497;
+    margin-bottom: 9px;
+    width: 100%;
+    flex-direction: row;
+}
+
+#DC{
+    background-position: right 0.2rem center !important; 
+    display: flex;
+    right: auto;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 9px;
+    flex-direction: row;
+}
+#button{
+    margin-top: 9px;
+    display: flex;
+    margin-bottom: 9px;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+#S_button{
+    font-size: 17px;
+    height: 40px;
+    box-shadow: none !important;
+    margin-right: 24px;
+    border-color: none !important;
+    
+}
+
+#C_button {
+    font-size: 17px;
+    height: 40px;
+    box-shadow: none !important;
+    border-color: none !important;
+}
+.close_button:hover{
+    
+    background-color: rgb(58, 57, 57);
+}
+#check{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+/* Table style starts */
+.no_result{
+    width: 72vw;
+    line-height: 21px;
+    border-radius: 13px;
+    margin-left: auto;
+    
+    margin-bottom: 15px;
+    margin-top: 80px;
+    margin-right: auto;
+    max-width: 800px;
+    background-color: white;
+}
+
+.table_responsive{
+    padding-right: 5px;
+    
+    margin-left: auto;
+    padding-left: 5px;
+    margin-right: auto;
+    width: 90vw;
+    margin-top: 50px;
+    max-width: 1060px;
+}
+
+thead tr:last-child th:last-child{
+    border-bottom: 1px solid #3a3a3a;
+    border-radius: 0 15px 0 0;
+}
+thead tr:last-child th:first-child{
+    
+    border-bottom: 1px solid #3a3a3a;
+    border-radius: 15px 0 0 0;
+}
+
+tbody tr th{
+    text-align: center;
+    height: 30px;
+}
+thead tr th{
+    text-align: center;
+    
+    height: 30px;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+tbody tr:nth-child(odd){
+    border-bottom: 1px solid #3a3a3a;
+    
+}
+tbody{
+   
+}
+
+tbody tr:nth-child(even){
+    border-bottom: 1px solid #3a3a3a;
+    
+}
+
+
+
+tbody tr:last-child td:last-child{
+   
+    border-bottom: 1px solid #3a3a3a;
+}
+tbody tr:last-child th:first-child{
+    
+    border-bottom: 1px solid #3a3a3a;
+}
+
+tbody tr td{
+    border-bottom: 1px solid #3a3a3a;
+}
+
+
+/* event card starts */
+
+
+.event_card{
+    width: 96vw;
+    display: flex;
+    margin-top: 51px;
+    background-color:rgba(149, 147, 147, 0.322);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(3.9px);
+    max-width: 861px;
+    flex-direction: column;
+}
+#arrow{
+
+}
+#back{
+    cursor: pointer;
+}
+.event_card_name{
+    margin-top: 40px;
+    font-size: 25px;
+    
+    color: white;
+    font-weight: 400;
+}
+.mat-tab-group{
+    margin-top: 40px;
+    margin-bottom: 20px;
+    width: 100%;
+    color: white !important;
+    
+}
+.evl{
+    background-color: transparent !important;
+}
+
+.event_info{
+    margin-top: 24px;
+}
+.event_labels{
+    color:#81ffe0;
+    font-size: 20px;
+}
+::ng-deep .mat-tab-header{
+    background-color: #489c8c !important;
+}
+.ssi{
+    height:37px;
+    width:37px;
+}
+.fb_twit{
+    margin-top: 15px;
+    margin-bottom: -8px;
+}
+
+.twit{
+    color: rgb(69, 191, 240) !important;
+}
+/* .social{
+    display: flex;
+    align-items: center;
+} */
+.fa-facebook-square:hover{
+    color: #0d6efd !important;
+}
+/* Artist Field */
+
+.no_artist{
+    background-color: white;
+    max-width: 625px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 95px;
+    margin-bottom: 133px;
+    border-radius: 22px;
+    line-height: 22px;
+    width: 60vw;
+}
+.top_contain{
+    margin-top: 21px;
+}
+:host ::ng-deep .spinner circle{   
+    stroke: red;
+    
+}
+.col2{
+    /* align the content vertically center*/
+    display: flex;
+    flex-direction: column;
+}
+.col3{
+    /* align the content vertically center*/
+    display: flex;
+    flex-direction: column;
+}
+.col4{
+    /* align the content vertically center*/
+    display: flex;
+    flex-direction: column;
+}
+.col1{
+    /* align the content vertically center*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.half.collapse {
+    max-height: 38px;
+    overflow: hidden;
+  }
+.full.collapse {
+    overflow: hidden;
+}
+.collapsing {
+    height: 0;
+    overflow: hidden;
+  }
+  
+.collapsed {
+    max-height: none; 
+  } 
+   /* .hide-content { 
+    overflow: hidden; 
+    text-overflow: unset !important; 
+    display: -webkit-box;
+    -webkit-box-orient: vertical; 
+    -webkit-line-clamp: 2;
+    white-space: normal;
+    word-break: break-word;
+    width: 100%;
+   }
+   */
+
+/* .hide-content {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-wrap: normal;
+} */
+
+.boxshadow_hide{
+    box-shadow: none !important;
+}
+.reservation_form_label{
+    font-size:24px; 
+    font-weight:500;
+    margin-bottom: -5px;
+}
+.footeeeerrr{
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+.carousel-control-next,.carousel-control-prev {
+    filter: invert(100%);
+}
+
+
+
+/* Labels for Ticket status */
+.label {
+    color: white;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 70px;
+    margin-top: 3px;
+    font-size: 17px;
+    font-family: Calibri;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.tag{
+    background-color: green;
+    border-radius: 7px;
+}
+.label1 {
+    color: white;
+    padding-top: 4px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 100px;
+    margin-top: 3px;
+    font-size: 17px;
+    font-family: Calibri;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.tag1{
+    background-color: orange;
+    border-radius: 7px;
+}
+.label2 {
+    color: white;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 70px;
+    margin-top: 3px;
+    font-size: 17px;
+    font-family: Calibri;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.tag2{
+    background-color: red;
+    border-radius: 7px;
+}
+.label3{
+    color: white;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 78px;
+    margin-top: 3px;
+    font-size: 17px;
+    font-family: Calibri;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.tag3{
+    background-color: black;
+    border-radius: 7px;
+}
+.label4{
+    color: white;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 3px;
+    width: 85px;
+    margin-top: 3px;
+    font-size: 17px;
+    font-family: Calibri;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.tag4{
+    background-color: orange;
+    border-radius: 7px;
+}
+
+.followers{
+}
+

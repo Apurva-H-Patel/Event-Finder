@@ -1,0 +1,14 @@
+
+.navbar-nav>.active>a {
+    border-radius: 1em;
+    border: 2px solid white;
+}
+.details{
+    padding-right: 10px;
+}
+.labelsofitem{
+    text-align: right;
+}
+.unorderlistclass{
+
+}
